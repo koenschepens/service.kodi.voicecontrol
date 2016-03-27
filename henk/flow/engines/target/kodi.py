@@ -28,7 +28,7 @@ except:
 class Kodi(TargetBase):
     Config = None
     def __init__(self, context):
-        TargetBase.__init__(self, context.folder)
+        TargetBase.__init__(self, context)
      
     def log(self, text, logType = "warning"):
         logTypes = { 
@@ -47,12 +47,12 @@ class Kodi(TargetBase):
         self.activate_window(WINDOW_DIALOG_TEXT_VIEWER)
 
     def get_json_result(self, query):
-        xbmcResult = self.Context.xbmc.executeJSONRPC(query.encode('utf8'))
+        xbmcResult = self.context.xbmc.executeJSONRPC(query.encode('utf8'))
 
-        if(self.Context.log(xbmcResult['status']['code'] == '200')):
-            self.Context.log("succes! " + str(xbmcResult))
+        if(self.context.log(xbmcResult['status']['code'] == '200')):
+            self.context.log("succes! " + str(xbmcResult))
         else:
-            self.Context.log("error! result.ParsedJson: " + str(xbmcResult.ParsedJson) + ". Kodi response: " + str(xbmcResult))
+            self.context.log("error! result.ParsedJson: " + str(xbmcResult.ParsedJson) + ". Kodi response: " + str(xbmcResult))
 
         return xbmcResult
 
