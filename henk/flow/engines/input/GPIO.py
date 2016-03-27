@@ -1,6 +1,6 @@
 __author__ = 'macbook'
 
-import GPIO.GPIO as gpio
+import RPi.GPIO as gpio
 
 class GPIO():
     def __init__(self, context):
