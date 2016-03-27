@@ -30,7 +30,7 @@ class HoundifyRecognition():
         self.pa = pyaudio.PyAudio()
         self.Language = context.Language
         self.IncludesDir = context.IncludesDir
-        self.Context = context
+        self.context = context
 
     def get(self):
         self.stream = self.open_mic_stream()

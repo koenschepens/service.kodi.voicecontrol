@@ -5,7 +5,7 @@ import RPi.GPIO as gpio
 class GPIO():
     def __init__(self, context):
         gpio.setmode(gpio.BCM)
-        gpio.setup(context.Config["gpio"]["hoorn"], gpio.IN, pull_up_down = gpio.PUD_DOWN)
+        gpio.setup(context.config["gpio"]["hoorn"], gpio.IN, pull_up_down = gpio.PUD_DOWN)
 
     def input(self, channel):
         value = raw_input(("Int value for {0}: ").format(channel))
