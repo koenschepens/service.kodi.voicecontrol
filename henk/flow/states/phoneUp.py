@@ -7,7 +7,7 @@ import phoneDown
 
 class PhoneUp(statebase.StateBase):
     def go(self):
-        while(self.context.isUp()):
+        while(self.context.is_up()):
             if(self.context.is_talking()):
                 self.context.log("Please wait... Still talking...")
                 while(self.context.is_talking()):

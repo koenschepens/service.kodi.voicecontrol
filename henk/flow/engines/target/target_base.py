@@ -11,7 +11,7 @@ class TargetBase():
     def __init__(self, context):
         self.context = context
 
-    def isUp(self):
+    def is_up(self):
         pass
 
     def log(self, text):

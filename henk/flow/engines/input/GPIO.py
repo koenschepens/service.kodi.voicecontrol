@@ -5,29 +5,9 @@ import RPi.GPIO as gpio
 class GPIO():
     def __init__(self, context):
         gpio.setmode(gpio.BCM)
-        gpio.setup(context.config.getint("gpio", "hook"), gpio.IN, pull_up_down = gpio.PUD_DOWN)
+        self.pin = context.config.getint("gpio", "hook")
+        gpio.setup(self.pin, gpio.IN, pull_up_down = gpio.PUD_DOWN)
 
-    def input(self, channel):
-        value = raw_input(("Int value for {0}: ").format(channel))
-    
-        while (not is_number(value)):
-            print ("FOUT!")
-            value = raw_input(("Int value for {0}: ").format(channel))
-    
-        return int(value)
+    def is_up(self):
+        return gpio.input(self.pin)
         
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        pass
-
-    try:
-        import unicodedata
-        unicodedata.numeric(s)
-        return True
-    except (TypeError, ValueError):
-        pass
-
-    return False

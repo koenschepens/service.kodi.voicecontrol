@@ -20,7 +20,7 @@ class Console():
     def setup(self, address, inout, pull_up_down = PUD_DOWN):
         pass
 
-    def isUp(self):
+    def is_up(self):
         return self.input("hoorn") == 1
 
     def input(self, channel):

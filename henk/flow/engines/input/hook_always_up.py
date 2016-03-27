@@ -1,5 +1,5 @@
 from console import Console
 
 class HookAlwaysUp(Console):
-    def isUp(self):
+    def is_up(self):
         return True

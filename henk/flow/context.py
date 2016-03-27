@@ -32,8 +32,8 @@ class Context():
         else:
             print(message)
 
-    def isUp(self):
-        return self.input_engine.isUp()
+    def is_up(self):
+        return self.input_engine.is_up()
 
     def run(self):
         self.state.go()
