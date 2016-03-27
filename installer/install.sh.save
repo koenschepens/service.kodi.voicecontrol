@@ -18,7 +18,7 @@ sudo cp /Applications/Kodi.app/Contents/Resources/Kodi/addons/service.kodi.voice
 sudo rm -R /Applications/Kodi.app/Contents/Resources/Kodi/addons/service.kodi.voicecontrol/
 rm -v -R ../program/*.pyc
 rm -R $serviceFolder/*.pyc
-rsync -av --exclude='*.config' --exclude='build' --exclude='*.pyc' --exclude='installer' ../ $serviceFolder/
+rsync -av --exclude='*.config' --exclude='build' --exclude='*.pyc' ../ $serviceFolder/
 
 cp -Rv ./.backup/* /Applications/Kodi.app/Contents/Resources/Kodi/addons/service.kodi.voicecontrol/
 
