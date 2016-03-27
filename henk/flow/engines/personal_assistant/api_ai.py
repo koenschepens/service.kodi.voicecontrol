@@ -16,6 +16,7 @@ class ApiAi(PersonalAssistantBase):
         self.subscription_key = context.config.get('aiapi', 'subscription_key')
 
         self.Api = apiai.ApiAI(self.client_access_token, self.subscription_key)
+        self._is_open = False
 
     def is_active(self):
         return False
@@ -67,6 +68,7 @@ class ApiAi(PersonalAssistantBase):
 
         self.request = self.Api.voice_request()
         self.request.lang = 'en' # optional, default value equal 'en'
+        self._is_open = True
 
     def send(self, in_data, frame_count):
         frames, data = self.resampler.resample(in_data, frame_count)
@@ -76,6 +78,7 @@ class ApiAi(PersonalAssistantBase):
         return data, state
 
     def close(self):
+        self._is_open = False
         pass
 
     def create_result(self, json_result):

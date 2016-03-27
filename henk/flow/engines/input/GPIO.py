@@ -10,4 +10,3 @@ class GPIO():
 
     def is_up(self):
         return gpio.input(self.pin)
-        

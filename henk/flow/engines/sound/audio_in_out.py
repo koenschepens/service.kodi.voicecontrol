@@ -180,8 +180,6 @@ class AudioInOut(SoundBase):
             if(not self.startedTalking and amplitude > INITIAL_VOL_THRESHOLD):
                 self.startedTalking = True
                 self.context.log("started talking...")
-            '''else:
-                assistant_callback(in_data, frame_count)'''
 
             if(self.startedTalking):
                 if(amplitude <= INITIAL_VOL_THRESHOLD):

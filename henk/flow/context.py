@@ -52,17 +52,17 @@ class Context():
         if(message is None):
             self.sound_engine.open()
 
-            self.personal_assistant.open(self.sound_engine.input_sample_rate)
-
             # Writes the stream from the sound engine to the personal assistant
             def audio_callback(in_data, frame_count):
+                if(not self.personal_assistant.is_open()):
+                    self.personal_assistant.open(self.sound_engine.input_sample_rate)
                 self.personal_assistant.send(in_data, frame_count)
 
             self.sound_engine.record(audio_callback)
             self.sound_engine.close()
 
+            #wait for the response from the assistant
             while(self.personal_assistant.is_active()):
-                #wait for the response from the assistant
                 sleep(0.1)
 
             self.personal_assistant.close()
