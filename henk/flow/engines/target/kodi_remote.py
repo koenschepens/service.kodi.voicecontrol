@@ -1,13 +1,13 @@
 import logging
 
-import target_base
+from target_base import TargetBase
 from includes.xbmc_client import xbmc_client as xbmcclient
 
 
 # Use this context to create a remote connection with target
-class KodiRemote(target_base.TargetBase):
+class KodiRemote(TargetBase):
     def __init__(self, context):
-        target_base.TargetBase.__init__(self, context)
+        TargetBase.__init__(self, context)
 
         host = self.context.config.get("xbmc", "host")
         port = self.context.config.getint("xbmc", "port")

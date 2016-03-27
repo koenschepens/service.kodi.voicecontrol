@@ -25,7 +25,7 @@ except:
         WINDOW_DIALOG_TEXT_VIEWER = 4
         pass
 
-class Kodi(target_base.TargetBase):
+class Kodi(TargetBase):
     Config = None
     def __init__(self, context):
         TargetBase.__init__(self, context.folder)

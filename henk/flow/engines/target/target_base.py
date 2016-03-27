@@ -5,7 +5,7 @@ import json
 
 sys.path.insert(0,'..')
 
-class TargetBase:
+class TargetBase():
     context = None
 
     def __init__(self, context):
