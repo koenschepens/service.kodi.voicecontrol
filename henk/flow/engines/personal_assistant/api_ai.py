@@ -17,12 +17,13 @@ class ApiAi(PersonalAssistantBase):
 
         self.Api = apiai.ApiAI(self.client_access_token, self.subscription_key)
         self._is_open = False
+        self.request = None
 
     def is_active(self):
         return False
 
     def get_result(self):
-        if(self.request):
+        if(self.request is not None):
             api_response = self.request.getresponse()
             json_result = json.loads(api_response.read())
             self.context.log(str(json_result))
