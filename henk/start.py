@@ -21,7 +21,7 @@ def get_engine(type, context):
 
 actionString = None
 _context = None
-
+audio_device_out = None
 i = 0
 for arg in sys.argv:
     print("arg: " + arg)
@@ -38,10 +38,16 @@ for arg in sys.argv:
     if(arg == '-s'):
         config_files.append(os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1])))
         print("using config files: " + str(config_files))
+    if(arg == '-ao'):
+        audio_device_out = int(sys.argv[i + 1])
+        print("using config files: " + str(config_files))
 
     i = i + 1
 
 config.read(config_files)
+
+if(audio_device_out is not None):
+    config.set("sound", "phone_out", audio_device_out)
 
 if(_context is None):
     tts_gender = config.get("tts", "gender")
