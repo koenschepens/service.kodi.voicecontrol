@@ -13,8 +13,6 @@ config = ConfigParser.RawConfigParser()
 includes_dir = folder + '/includes'
 configFile = os.path.realpath(os.path.join(folder, '..', 'settings.config'))
 
-config.read(configFile)
-
 def get_engine(type, context):
     engine = context.config.get("engines", type)
     class_name = ''.join(s[0].upper() + s[1:] for s in engine.split('_'))
@@ -39,6 +37,7 @@ for arg in sys.argv:
         print("execute: " + actionString)
     if(arg == '-s'):
         configFile = os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1]))
+        config.read(configFile)
         print("using config file: " + configFile)
 
     i = i + 1
