@@ -104,12 +104,9 @@ class AudioInOut(SoundBase):
     def close(self):
         self.pa.terminate()
         if(self.output_stream is not None):
-            self.output_stream.stop_stream()
-            self.output_stream.close()
+            self.pa.close(self.output_stream)
         if(self.input_stream is not None):
-            self.input_stream.stop_stream()
-            self.input_stream.close()
-        self.pa.close(self.output_stream)
+            self.pa.close(self.input_stream)
 
     def play_wav(self, path):
         wf = wave.open(path, 'rb')
