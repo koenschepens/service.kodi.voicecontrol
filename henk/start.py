@@ -11,7 +11,7 @@ from flow import context, actions
 
 config = ConfigParser.RawConfigParser()
 includes_dir = folder + '/includes'
-configFile = os.path.realpath(os.path.join(folder, '..', 'settings.config'))
+config_files = [os.path.realpath(os.path.join(folder, '..', 'settings.config'))]
 
 def get_engine(type, context):
     engine = context.config.get("engines", type)
@@ -36,11 +36,12 @@ for arg in sys.argv:
         actionString = sys.argv[i + 1]
         print("execute: " + actionString)
     if(arg == '-s'):
-        configFile = os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1]))
-        config.read(configFile)
-        print("using config file: " + configFile)
+        config_files.append(os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1])))
+        print("using config files: " + str(config_files))
 
     i = i + 1
+
+config.read(config_files)
 
 if(_context is None):
     tts_gender = config.get("tts", "gender")

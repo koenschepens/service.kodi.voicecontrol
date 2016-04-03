@@ -12,7 +12,6 @@ import pyaudio
 
 from sound_base import SoundBase
 
-INITIAL_VOL_THRESHOLD = 0.010
 FORMAT = pyaudio.paInt16
 SHORT_NORMALIZE = (1.0/32768.0)
 CHANNELS = 1
@@ -30,6 +29,7 @@ class AudioInOut(SoundBase):
     def __init__(self, context, input_sample_rate):
         self.input_sample_rate = input_sample_rate
         self.context = context
+        self.threshold = self.context.config.getfloat("sound", "threshold")
 
     def play_dial_tone(self, output):
         self.context.execute_script('aplay -D ' + self.context.config.get('output', output) + ' ' + self.context.includes_dir + '/sounds/beepbeep.wav')
@@ -177,12 +177,12 @@ class AudioInOut(SoundBase):
         def callback(in_data, frame_count, time_info, status):
             amplitude = self.get_rms(in_data)
 
-            if(not self.startedTalking and amplitude > INITIAL_VOL_THRESHOLD):
+            if(not self.startedTalking and amplitude > self.threshold):
                 self.startedTalking = True
                 self.context.log("started talking...")
 
             if(self.startedTalking):
-                if(amplitude <= INITIAL_VOL_THRESHOLD):
+                if(amplitude <= self.threshold):
                     self.silentcount += 1
                 else:
                     self.silentcount = 0
