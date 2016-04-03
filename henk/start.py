@@ -39,6 +39,7 @@ for arg in sys.argv:
         print("execute: " + actionString)
     if(arg == '-s'):
         configFile = os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1]))
+        print("using config file: " + configFile)
 
     i = i + 1
 
