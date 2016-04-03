@@ -37,6 +37,8 @@ for arg in sys.argv:
     if(arg == '-e'):
         actionString = sys.argv[i + 1]
         print("execute: " + actionString)
+    if(arg == '-s'):
+        configFile = os.path.realpath(os.path.join(folder, '..', sys.argv[i + 1]))
 
     i = i + 1
 
