@@ -29,6 +29,8 @@ class AudioInOut(SoundBase):
         self.input_sample_rate = input_sample_rate
         self.context = context
         self.threshold = self.context.config.getfloat("sound", "threshold")
+        self.output_stream = None
+        self.input_stream = None
 
     def play_dial_tone(self, output):
         self.context.execute_script('aplay -D ' + self.context.config.get('output', output) + ' ' + self.context.includes_dir + '/sounds/beepbeep.wav')
