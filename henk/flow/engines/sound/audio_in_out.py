@@ -161,14 +161,39 @@ class AudioInOut(SoundBase):
         self.pa.terminate()
 
     def play_ogg(self, path):
-        import pygame
-        pygame.init()
-        song = pygame.mixer.Sound(path)
-        clock = pygame.time.Clock()
-        song.play()
-        while pygame.mixer.get_busy():
-            time.sleep(0.2)
-        pygame.quit()
+        try:
+            file = audiotools.open(path)
+            stream = file.to_pcm()
+
+            self.output_stream = self.pa.open(format = FORMAT,
+                                 channels = CHANNELS,
+                                 rate = RATE,
+                                 input = False,
+                                 output = True,
+                                 output_device_index=self.output_device_index,
+                                 frames_per_buffer = INPUT_FRAMES_PER_BLOCK)
+
+            # read data (based on the chunk size)
+            data = stream.read(CHUNK)
+
+            # play stream (looping from beginning of file to the end)
+            while data != '':
+                # writing to the stream is what *actually* plays the sound.
+                self.output_stream.write(data)
+                data = stream.read(CHUNK)
+
+            # cleanup stuff.
+            self.output_stream.close()
+            self.pa.terminate()
+        except:
+            import pygame
+            pygame.init()
+            song = pygame.mixer.Sound(path)
+            clock = pygame.time.Clock()
+            song.play()
+            while pygame.mixer.get_busy():
+                time.sleep(0.2)
+            pygame.quit()
 
     def record(self, assistant_callback):
         self.silentcount = 0
