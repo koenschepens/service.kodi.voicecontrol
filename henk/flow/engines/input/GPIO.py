@@ -9,4 +9,4 @@ class GPIO():
         gpio.setup(self.pin, gpio.IN, pull_up_down = gpio.PUD_DOWN)
 
     def is_up(self):
-        return gpio.input(self.pin)
+        return gpio.input(self.pin) == 0

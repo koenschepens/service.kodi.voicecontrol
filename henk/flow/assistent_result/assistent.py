@@ -31,7 +31,7 @@ class AssistentResult():
             name = splitted[0]
             value = splitted[1]
 
-            # TODO : I can do better than this:
+            # TODO: Make this more elegant:
             if("q" in self.Parameters):
                 value = value.replace("$q", self.Parameters["q"])
             if("location" in self.Parameters):

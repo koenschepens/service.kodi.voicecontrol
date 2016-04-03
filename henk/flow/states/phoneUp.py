@@ -15,12 +15,13 @@ class PhoneUp(statebase.StateBase):
 
             result = self.context.ask()
 
-            self.context.state = actionState(self.context)
-            self.context.state.handle(result)
+            if(result is not None):
+                self.context.state = actionState(self.context)
+                self.context.state.handle(result)
 
-            if(result.SpokenResponse is not None):
-                # also speak out the result
-                self.context.say(result.SpokenResponse, "phone_out", False)
+                if(result.SpokenResponse is not None):
+                    # also speak out the result
+                    self.context.say(result.SpokenResponse, "phone_out", False)
 
         self.context.state = phoneDown.PhoneDown(self.context)
         self.context.state.go()
