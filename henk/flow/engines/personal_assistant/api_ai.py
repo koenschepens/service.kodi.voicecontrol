@@ -71,6 +71,9 @@ class ApiAi(PersonalAssistantBase):
         self.request.lang = 'en' # optional, default value equal 'en'
         self._is_open = True
 
+    def is_open(self):
+        return self._is_open
+
     def send(self, in_data, frame_count):
         frames, data = self.resampler.resample(in_data, frame_count)
         state = self.vad.processFrame(frames)

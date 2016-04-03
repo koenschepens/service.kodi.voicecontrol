@@ -16,6 +16,7 @@ class HoundifyEngine(PersonalAssistantBase, HoundListener):
         self.client_id = context.config.get("houndify", "client_id")
         self.client_key = context.config.get("houndify", "client_key")
         self._result = None
+        self._is_open = False
         self.finished_handler = None
 
     def ask_text(self, what):
@@ -24,10 +25,10 @@ class HoundifyEngine(PersonalAssistantBase, HoundListener):
 
     def is_active(self):
         active = self._result is None
-
-        print(str(self) + " > " + str(active))
-
         return active
+
+    def is_open(self):
+        return
 
     def open(self, source_rate):
         self.client = StreamingHoundClient(self.client_id, self.client_key, sampleRate=16000)
@@ -35,6 +36,7 @@ class HoundifyEngine(PersonalAssistantBase, HoundListener):
         self.resampler = resampler.Resampler(source_samplerate=source_rate)
         self.client.setLocation(37.388309, -121.973968)
         self._active = True
+        self._is_open = True
         self.client.start(self)
 
     def send(self, in_data, frame_count):
