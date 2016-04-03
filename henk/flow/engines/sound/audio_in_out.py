@@ -24,7 +24,6 @@ OVERSENSITIVE = 15.0/INPUT_BLOCK_TIME
 # if we get this many quiet blocks in a row, decrease the threshold
 UNDERSENSITIVE = 120.0/INPUT_BLOCK_TIME
 
-__author__ = 'macbook'
 class AudioInOut(SoundBase):
     def __init__(self, context, input_sample_rate):
         self.input_sample_rate = input_sample_rate
@@ -142,7 +141,7 @@ class AudioInOut(SoundBase):
                              channels = CHANNELS,
                              rate = RATE,
                              input = False,
-                             output=True,
+                             output = True,
                              output_device_index=self.output_device_index,
                              frames_per_buffer = INPUT_FRAMES_PER_BLOCK)
 
@@ -165,11 +164,11 @@ class AudioInOut(SoundBase):
             stream = file.to_pcm()
             self.context.log("play ogg using device {0}".format(self.output_device_index))
             self.output_stream = self.pa.open(format = FORMAT,
-                                 channels = CHANNELS,
+                                 channels = 2,
                                  rate = RATE,
                                  input = False,
                                  output = True,
-                                 output_device_index=self.output_device_index,
+                                 output_device_index = self.output_device_index,
                                  frames_per_buffer = INPUT_FRAMES_PER_BLOCK)
 
             # read data (based on the chunk size)
