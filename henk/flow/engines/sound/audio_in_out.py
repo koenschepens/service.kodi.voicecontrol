@@ -105,7 +105,6 @@ class AudioInOut(SoundBase):
 
     def play_wav(self, path):
         wf = wave.open(path, 'rb')
-
         self.output_stream = self.pa.open(format = FORMAT,
                              channels = CHANNELS,
                              rate = RATE,
@@ -164,7 +163,7 @@ class AudioInOut(SoundBase):
         try:
             file = audiotools.open(path)
             stream = file.to_pcm()
-
+            self.context.log("play ogg using device {0}".format(self.output_device_index))
             self.output_stream = self.pa.open(format = FORMAT,
                                  channels = CHANNELS,
                                  rate = RATE,
