@@ -186,6 +186,7 @@ class AudioInOut(SoundBase):
             self.pa.terminate()
         except:
             self.context.log("Unexpected error: {0}".format(sys.exc_info()[0]))
+            raise
             import pygame
             pygame.init()
             song = pygame.mixer.Sound(path)
