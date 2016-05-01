@@ -1,1 +1,0 @@
-import houndify_recognition as SpeechRecognition

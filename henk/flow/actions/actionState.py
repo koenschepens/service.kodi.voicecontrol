@@ -1,4 +1,4 @@
-from henk.flow.actions import spotify_action
+from ..actions import spotify_action
 from ..states.statebase import StateBase
 import media, news, input as Input, images, apps, wisdom
 import name, weather, clock, message, smalltalk

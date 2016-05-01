@@ -1,5 +1,5 @@
 import time
-from henk.flow.engines.audio_out.audio_out_base import AudioOutBase
+from .audio_out_base import AudioOutBase
 import pygame
 
 __author__ = 'macbook'

@@ -1,6 +1,6 @@
 import os
 import time
-from henk.flow.engines.audio_out.audio_out_base import AudioOutBase
+from ..audio_out.audio_out_base import AudioOutBase
 
 class Mpg123(AudioOutBase):
     supported_formats = ["mp3"]

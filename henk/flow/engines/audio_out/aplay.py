@@ -1,4 +1,4 @@
-from henk.flow.engines.audio_out.audio_out_base import AudioOutBase
+from .audio_out_base import AudioOutBase
 
 __author__ = 'macbook'
 

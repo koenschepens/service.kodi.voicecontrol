@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/GitHub/OldPhone/service.kodi.voicecontrol/.idea/service.kodi.voicecontrol.iml" filepath="$USER_HOME$/GitHub/OldPhone/service.kodi.voicecontrol/.idea/service.kodi.voicecontrol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/service.kodi.voicecontrol.iml" filepath="$PROJECT_DIR$/.idea/service.kodi.voicecontrol.iml" />
     </modules>
   </component>
 </project>

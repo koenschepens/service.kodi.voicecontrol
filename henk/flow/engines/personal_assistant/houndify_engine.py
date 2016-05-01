@@ -1,13 +1,8 @@
 import json
-from henk.flow.actions.smalltalk import smalltalk
-from henk.flow.actions.configActionState import configActionState
-from henk.flow.actions.weather import weather
-from henk.flow.media_command.command_factory import get_command
 import resampler
 from personal_assistent_base import PersonalAssistantBase
 from ...media_command.media_command_base import *
-
-from includes.houndify.houndify import HoundListener, StreamingHoundClient, TextHoundClient
+from ....includes.houndify.houndify import HoundListener, StreamingHoundClient, TextHoundClient
 
 class HoundifyEngine(PersonalAssistantBase, HoundListener):
     def __init__(self, context):
