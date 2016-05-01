@@ -147,7 +147,8 @@ class PyAudio(AudioOutBase):
         while data != '':
             # writing to the stream is what *actually* plays the sound.
             self.output_stream.write(data)
-            data = stream.read(CHUNK)
+            framelist = stream.read(CHUNK)
+            data = framelist.to_bytes(False, True)
 
         # cleanup stuff.
         self.output_stream.close()

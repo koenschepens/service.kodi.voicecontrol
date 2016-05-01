@@ -82,7 +82,7 @@ class PyAudio(AudioInBase):
 
                 assistant_callback(in_data, frame_count)
 
-                if(self.silentcount > int(self.context.config.get("sound", "wait_after_speak"))):
+                if(not self.context.is_up() or self.silentcount > int(self.context.config.get("sound", "wait_after_speak"))):
                     self.context.log("stopped listening...")
                     return (in_data, pyaudio.paComplete)
 
