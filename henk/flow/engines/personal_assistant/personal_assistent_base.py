@@ -7,9 +7,8 @@ class PersonalAssistantBase():
     def __init__(self, context):
         self.context = context
         self._is_open = False
-
-    def is_active(self):
-        raise NotImplementedError
+        self._is_active = False
+        self._is_listening = False
 
     def ask_text(self, what):
         print("you said: " + what)
@@ -23,8 +22,14 @@ class PersonalAssistantBase():
     def is_open(self):
         return self._is_open
 
+    def is_active(self):
+        return self._is_active
+
+    def is_listening(self):
+        return self._is_listening
+
     def close(self):
-        pass
+        raise NotImplementedError
 
     def getresponse(self):
         return self.request.getresponse().read()

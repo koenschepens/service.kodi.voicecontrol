@@ -1,3 +1,4 @@
+import os
 import re
 import ConfigParser
 import time
@@ -9,16 +10,21 @@ class configActionState(StateBase):
     def __init__(self, context):
         StateBase.__init__(self, context)
         self.config = ConfigParser.SafeConfigParser()
-        self.config.read(self.context.root_folder + '/actions.config')
-        self.context.log('actions config: ' + self.context.root_folder + '/actions.config')
+        configfile = os.path.realpath(os.path.join(self.context.root_folder, '..', 'actions.config'))
+        self.config.read(configfile)
+
+        self.context.log('actions config: ' + configfile)
     
     def handleDomainInit(self, domain):
         if(self.config.has_option(domain, "__init__")):
-            self.context.send_action(self.config.get(domain, "__init__"))
+            self.context.media_engine.send_action(self.config.get(domain, "__init__"))
             time.sleep(1)
 
     def handle(self, result):
-        actionIdentifiers = result.Action.split('.')
+        if(result.action is None):
+            return False
+
+        actionIdentifiers = result.action.split('.')
         domain = actionIdentifiers[0]
         action = actionIdentifiers[1]
 
@@ -48,11 +54,11 @@ class configActionState(StateBase):
                             command = re.sub('{(?P<parameter>\w*)}', lambda match: result.Parameters[match.group(1)], self.config.get(domain, option), flags=re.IGNORECASE)
                             self.context.log("command " + command)
                             self.handleDomainInit(domain)
-                            self.context.send_action(command)
+                            self.context.media_engine.send_action(command)
                             return True
                 else:
                     self.context.log("lame match for " + option + ":" + self.config.get(domain, option))
                     self.handleDomainInit(domain)
-                    self.context.send_action(self.config.get(domain, option))
+                    self.context.media_engine.send_action(self.config.get(domain, option))
                     return True
         return False

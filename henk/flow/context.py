@@ -1,17 +1,18 @@
 import os
 import sys
-from time import sleep
+import time
 import threading
 
 from states.initial import Initial
 
 class Context():
-    target_engine = None
+    media_engine = None
     tts_engine = None
     speech_recognition_engine = None
     personal_assistant = None
     input_engine = None
-    sound_engine = None
+    audio_in_engine = None
+    audio_out_engine = None
     config = None
     language = None
     state = None
@@ -27,13 +28,13 @@ class Context():
         self.state = Initial(self)
 
     def log(self, message):
-        if(self.target_engine is not None):
-            self.target_engine.log(message)
+        if(self.media_engine is not None):
+            self.media_engine.log(message)
         else:
             print(message)
 
-    def is_up(self):
-        return self.input_engine.is_up()
+    def is_up(self, initial = False):
+        return self.input_engine.is_up(initial)
 
     def run(self):
         self.state.go()
@@ -44,71 +45,58 @@ class Context():
         talking_count = 0
 
         while(self.is_talking()):
-            sleep(0.5)
+            time.sleep(0.5)
             talking_count += 1
             if(talking_count % 20 == 0):
-                self.log("Still talking...")
+                self.log("Still talking please wait...")
 
         if(message is None):
-            self.sound_engine.open()
+            self.audio_in_engine.open()
 
             # Writes the stream from the sound engine to the personal assistant
             def audio_callback(in_data, frame_count):
                 if(not self.personal_assistant.is_open()):
-                    self.personal_assistant.open(self.sound_engine.input_sample_rate)
+                    self.log("Starting assistant with input sample rate: %s (skipped first %s packages)" % (self.audio_in_engine.input_sample_rate, self.audio_in_engine.packagecount))
+                    self.personal_assistant.open(self.audio_in_engine.input_sample_rate)
                 self.personal_assistant.send(in_data, frame_count)
 
-            self.sound_engine.record(audio_callback)
-            self.sound_engine.close()
+                return self.personal_assistant.is_listening()
+
+            self.audio_in_engine.record(audio_callback)
+
+            #wait until the audio engine is done
+            while self.audio_in_engine.is_active():
+                time.sleep(0.1)
 
             #wait for the response from the assistant
             while(self.personal_assistant.is_active()):
-                sleep(0.1)
+                time.sleep(0.01)
+
+            #stop the audio engine
+            self.audio_in_engine.stop()
 
             self.personal_assistant.close()
+            self.audio_in_engine.close()
             return self.personal_assistant.get_result()
         else:
             return self.personal_assistant.ask_text(message)
 
-
     def is_talking(self):
         return self.talk_thread is not None and self.talk_thread.is_alive()
 
+    def show_notification(self, title, message = ''):
+        self.media_engine.show_notification(title, message)
+
     def say(self, message, output = "phone_out", asynchronous = False):
-        self.sound_engine.set_output(self.config.getint("sound", output))
+        self.audio_out_engine.set_output(self.config.getint("sound", output))
 
         method = self.tts_engine.speak
-        args = (message, self.sound_engine)
+        args = (message, self.audio_out_engine)
         if(asynchronous):
             self.talk_thread = threading.Thread(target=method, args=args, kwargs={})
             self.talk_thread.start()
         else:
             method(*args)
 
-    def show_notification(self, title, message = ''):
-        self.target_engine.show_notification(title, message)
-
     def user_input_required(self):
-        return self.target_engine.user_input_required()
-
-    def play_movie(self, result):
-        params = result.Parameters
-        if('title' in params and params['title'] != '$title'):
-            q = params['title']
-            self.target_engine.search_movie(q)
-            url = 'plugin://plugin.video.kodipopcorntime/search?query=' + q + ''
-        elif('searchQuery' in params and params['searchQuery'] != '$q'):
-            q = params['searchQuery']
-            url = 'plugin://plugin.video.kodipopcorntime/search?query=' + q + ''
-        elif('genre' in params and params['genre'] != '$genre'):
-            url = 'plugin://plugin.video.kodipopcorntime/genres/' + params['genre'] + '/1?limit=20'
-        else:
-            url = "plugin://plugin.video.kodipopcorntime/genres"
-
-        container = self.context.activate_window(url, window='videos')
-
-    def show_weather(self, location):
-        self.target_engine.activate_window(pluginurl = None, window = "weather")
-
-    def send_action(self, action):
-        self.target_engine.send_action(action)
+        return self.media_engine.user_input_required()

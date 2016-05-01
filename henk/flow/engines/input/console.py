@@ -20,17 +20,16 @@ class Console():
     def setup(self, address, inout, pull_up_down = PUD_DOWN):
         pass
 
-    def is_up(self):
+    def is_up(self, initial = False):
+        if(initial):
+            return True
+
         return self.input("hoorn") == 1
 
     def input(self, channel):
-        value = raw_input(("Int value for {0}: ").format(channel))
+        value = raw_input("press enter to talk")
 
-        while (not is_number(value)):
-            print ("FOUT!")
-            value = raw_input(("Int value for {0}: ").format(channel))
-
-        return int(value)
+        return 1
 
 def is_number(s):
     try:

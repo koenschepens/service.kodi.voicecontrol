@@ -6,10 +6,11 @@ import speaker
 
 class TtsPyvona(speaker.Speaker):
     def __init__(self, context, gender, language):
+        self.context = context
         speaker.Speaker.__init__(self, gender, language)
         self.pyvona_voice = self.create_voice("GDNAIRN4SS66PRNKPQZQ","2gURBTiaqnkjxEXZX+cslGhkJ+OVKTzWCZg7mvpp")
         allVoices = self.pyvona_voice.list_voices()
-        self.DesiredVoice = "Ruben"
+        self.DesiredVoice = "Brian"
         for voice in allVoices["Voices"]:
             if(voice["Gender"] == gender and voice["Language"] == language):
                 self.DesiredVoice = voice["Name"]
@@ -17,6 +18,8 @@ class TtsPyvona(speaker.Speaker):
         self.pyvona_voice.voice_name = self.DesiredVoice
 
     def speak(self, text, sound_engine):
+        self.context.log("\"%s\" (%s)" % (text, sound_engine))
+        self.pyvona_voice.voice_name = "Brian"
         self.pyvona_voice.speak(text, sound_engine)
 
     def create_voice(self, access_key, secret_key):
@@ -25,17 +28,16 @@ class TtsPyvona(speaker.Speaker):
         return Pyvona_voice(access_key, secret_key)
 
 class Pyvona_voice(pyvona.Voice):
-    def speak(self, text_to_speak, sound_engine):
-        """Speak a given text
-        """
-        with tempfile.NamedTemporaryFile(suffix=".ogg") as t:
-            self.codec = "ogg"
-            with self.use_ogg_codec():
-                self.fetch_voice_fp(text_to_speak, t)
+    def speak(self, text_to_speak, audio_out_engine):
+        self.codec = audio_out_engine.supported_formats[0]
+        with tempfile.NamedTemporaryFile(suffix="." + self.codec) as t:
+            if(self.codec == "ogg"):
+                with self.use_ogg_codec():
+                    self.fetch_voice_fp(text_to_speak, t)
+            else:
+                self.fetch_voice(text_to_speak, t.name)
 
-            sound_engine.play(t.name)
-
-        #subprocess.call(["mplayer", path, "-ao", hwout])
+            audio_out_engine.play(t.name)
 
 class Pyvona():
     def speak(lang, text):

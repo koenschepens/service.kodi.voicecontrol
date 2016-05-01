@@ -12,7 +12,7 @@ class Initial(statebase.StateBase):
         self.context = context
 
     def go(self):
-        if(self.context.is_up()):
+        if(self.context.is_up(True)):
             self.context.State = phoneUp.PhoneUp(self.context)
         else:
             self.context.State = phoneDown.PhoneDown(self.context)

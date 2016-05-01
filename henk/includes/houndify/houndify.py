@@ -239,37 +239,35 @@ class StreamingHoundClient:
 		def _callback(self, listener):
 			expectTranslatedResponse = False
 			while True:
-				try:
-					msg = self.conn.ReadMessage()
-					msg = zlib.decompress(msg.data, zlib.MAX_WBITS | 16)
-					if expectTranslatedResponse:
-						listener.onTranslatedResponse(msg)
-						continue
-					parsedMsg = json.loads(msg)
-					if parsedMsg.has_key("Format"):
-						if parsedMsg["Format"] == "SoundHoundVoiceSearchParialTranscript":
-							## also check SafeToStopAudio
-							listener.onPartialTranscript(parsedMsg["PartialTranscript"])
-							if parsedMsg.has_key("SafeToStopAudio") and parsedMsg["SafeToStopAudio"]:
-								## Because of the GIL, simple flag assignment like this is atomic
-								self.audioFinished = True
-						if parsedMsg["Format"] == "SoundHoundVoiceSearchResult":
-							## Check for ConversationState and ConversationStateTime
-							if parsedMsg.has_key("ResultsAreFinal"):
-								expectTranslatedResponse = True
-							if parsedMsg.has_key("AllResults"):
-								for result in parsedMsg["AllResults"]:
-									if result.has_key("ConversationState"):
-										self.HoundRequestInfo["ConversationState"] = result["ConversationState"]
-										if result["ConversationState"].has_key("ConversationStateTime"):
-											self.HoundRequestInfo["ConversationStateTime"] = result["ConversationState"]["ConversationStateTime"]
-							listener.onFinalResponse(parsedMsg)
-					elif parsedMsg.has_key("status"):
-						if parsedMsg["status"] <> "ok":
-							listener.onError(parsedMsg)
-					## Listen for other message types
-				except:
-					break
+				msg = self.conn.ReadMessage()
+				msg = zlib.decompress(msg.data, zlib.MAX_WBITS | 16)
+				if expectTranslatedResponse:
+					listener.onTranslatedResponse(msg)
+					continue
+				parsedMsg = json.loads(msg)
+				if parsedMsg.has_key("Format"):
+					if parsedMsg["Format"] == "SoundHoundVoiceSearchParialTranscript":
+						## also check SafeToStopAudio
+						listener.onPartialTranscript(parsedMsg["PartialTranscript"])
+						if parsedMsg.has_key("SafeToStopAudio") and parsedMsg["SafeToStopAudio"]:
+							## Because of the GIL, simple flag assignment like this is atomic
+							self.audioFinished = True
+					if parsedMsg["Format"] == "SoundHoundVoiceSearchResult":
+						## Check for ConversationState and ConversationStateTime
+						if parsedMsg.has_key("ResultsAreFinal"):
+							expectTranslatedResponse = True
+						if parsedMsg.has_key("AllResults"):
+							for result in parsedMsg["AllResults"]:
+								if result.has_key("ConversationState"):
+									self.HoundRequestInfo["ConversationState"] = result["ConversationState"]
+									if result["ConversationState"].has_key("ConversationStateTime"):
+										self.HoundRequestInfo["ConversationStateTime"] = result["ConversationState"]["ConversationStateTime"]
+						listener.onFinalResponse(parsedMsg)
+				elif parsedMsg.has_key("status"):
+					if parsedMsg["status"] <> "ok":
+						listener.onError(parsedMsg)
+				## Listen for other message types
+
 
 
 		def _authenticate(self, nonce):

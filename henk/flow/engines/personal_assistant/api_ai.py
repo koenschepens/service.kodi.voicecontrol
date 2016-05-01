@@ -4,8 +4,8 @@ import re
 
 import apiai
 
-from flow.assistent_result.assistent import AssistentResult, ImmediateResult
-from flow.assistent_result.apps import AppsResult
+from ...media_command.media_command_base import MediaCommand, ImmediateResult
+from ...media_command.command_factory import get_command
 from personal_assistent_base import PersonalAssistantBase
 
 class ApiAi(PersonalAssistantBase):
@@ -27,12 +27,12 @@ class ApiAi(PersonalAssistantBase):
             api_response = self.request.getresponse()
             json_result = json.loads(api_response.read())
             self.context.log(str(json_result))
-            self.result = self.create_result(json_result)
+            self.result = self.create_command(json_result)
         return self.result
 
     def ask_text(self, what):
         if(len(what) == 0):
-            self.result = AssistentResult("Sorry, I didn't hear you")
+            self.result = MediaCommand("Sorry, I didn't hear you")
             return self.result
 
         self.Request = what
@@ -59,7 +59,7 @@ class ApiAi(PersonalAssistantBase):
 
         parsed_json = json.loads(leJson)
 
-        self.result = AssistentResult(parsed_json, self.client_access_token, self.subscription_key)
+        self.result = self.create_command(parsed_json)
 
         return self.result
 
@@ -85,35 +85,38 @@ class ApiAi(PersonalAssistantBase):
         self._is_open = False
         pass
 
-    def create_result(self, json_result):
-        if('action' in json_result['result']):
-            action = json_result['result']['action']
+    def create_command(self, response):
+        if('parameters' in response['result']):
+            parameters = response['result']['parameters']
+        else:
+            parameters = {}
+
+        if('action' in response['result']):
+            action = response['result']['action']
+            if(action == "media.music_play"):
+                action = "music.play"
         else:
             action = "input.unknown"
 
-        if(action.startswith("apps")):
-            result = AppsResult(action)
-        else:
-            result = AssistentResult()
+        command = get_command(action.split('.')[0], action.split('.')[1], parameters)
 
-        result.Id = 1000
-        result.NextFunction = None
-        result.NeedsUserInput = False
-        result.Action = {}
-        result.IncludesDir = os.path.dirname(os.path.realpath(__file__)) + '/includes/'
-        result.ResolvedQuery = json_result['result']['resolvedQuery']
-        result.Text = json_result['result']['fulfillment']['speech']
-        result.SpokenResponse = result.Text if len(result.Text) > 0 else None
-        result.ParsedJson = json_result
-        result.assistent_response = json_result["html"] if "html" in json_result else None
+        command.Id = 1000
+        command.NextFunction = None
+        command.NeedsUserInput = False
+        command.IncludesDir = os.path.dirname(os.path.realpath(__file__)) + '/includes/'
+        command.ResolvedQuery = response['result']['resolvedQuery']
+        command.Text = response['result']['fulfillment']['speech']
+        command.SpokenResponse = command.Text if len(command.Text) > 0 else None
+        command.ParsedJson = response
+        command.assistent_response = response["html"] if "html" in response else None
+        command.search_query = parameters["q"] if "q" in parameters else None
+        command.artist = parameters["artist"] if "artist" in parameters else None
 
-        if('action' in json_result['result']):
-            result.Action = json_result['result']['action']
-        else:
-            result.Action = "input.unknown"
+        def other(command):
+            if(command.Text is not None):
+                return command.show_notification(command.ResolvedQuery, command.Text, 600)
+            else:
+                return command.show_notification(command.ResolvedQuery, "Me no understand", 601)
 
-        result.Parameters = {}
-        if('parameters' in json_result['result']):
-            result.Parameters = json_result['result']['parameters']
-
-        return result
+        return command
+        #self.Action = actionMapper[allresults["CommandKind"]] if allresults["CommandKind"] in actionMapper else "smalltalk.handle"

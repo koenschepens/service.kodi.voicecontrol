@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # try it.
 #   clientMatches = [ {
 #     "Expression" : '([1/100 ("can"|"could"|"will"|"would")."you"].[1/10 "please"].("turn"|"switch"|(1/100 "flip"))."on".["the"].("light"|"lights").[1/20 "for"."me"].[1/20 "please"])|([1/100 ("can"|"could"|"will"|"would")."you"].[1/10 "please"].[100 ("turn"|"switch"|(1/100 "flip"))].["the"].("light"|"lights")."on".[1/20 "for"."me"].[1/20 "please"])|((("i".("want"|"like"))|((("i".["would"])|("i\'d")).("like"|"want"))).["the"].("light"|"lights").["turned"|"switched"|("to"."go")|(1/100"flipped")]."on".[1/20"please"])"',
-#     "AssistentResult" : { "Intent" : "TURN_LIGHT_ON" },
+#     "MediaCommand" : { "Intent" : "TURN_LIGHT_ON" },
 #     "SpokenResponse" : "Ok, I\'m turning the lights on.",
 #     "SpokenResponseLong" : "Ok, I\'m turning the lights on.",
 #     "WrittenResponse" : "Ok, I\'m turning the lights on.",

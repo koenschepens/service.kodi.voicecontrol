@@ -1,7 +1,7 @@
 import json
 
 import xbmc
-from henk.flow.engines.target.kodi import kodi_json
+from henk.flow.engines.media.kodi import kodi_json
 
 
 class KodiList:

@@ -1,3 +1,4 @@
+import random
 from time import sleep
 
 from flow.actions.actionState import actionState
@@ -7,11 +8,16 @@ import phoneDown
 
 class PhoneUp(statebase.StateBase):
     def go(self):
-        while(self.context.is_up()):
+        while(self.context.is_up(False)):
             if(self.context.is_talking()):
                 self.context.log("Please wait... Still talking...")
                 while(self.context.is_talking()):
                     sleep(0.5)
+
+            '''questionid = random.choice(self.context.config.options("questions"))
+            question = self.context.config.get("questions", questionid)
+            self.context.log(question)
+            result = self.context.ask(question)'''
 
             result = self.context.ask()
 

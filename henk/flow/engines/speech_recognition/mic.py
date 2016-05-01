@@ -1,9 +1,9 @@
-import pyaudio
+import py_audio
 import struct
 import math
 
 INITIAL_TAP_THRESHOLD = 0.010
-FORMAT = pyaudio.paInt16
+FORMAT = py_audio.paInt16
 SHORT_NORMALIZE = (1.0/32768.0)
 CHANNELS = 2
 RATE = 44100
@@ -40,7 +40,7 @@ def get_rms( block ):
 
 class TapTester(object):
     def __init__(self):
-        self.pa = pyaudio.PyAudio()
+        self.pa = py_audio.PyAudio()
         self.stream = self.open_mic_stream()
         self.tap_threshold = INITIAL_TAP_THRESHOLD
         self.noisycount = MAX_TAP_BLOCKS+1

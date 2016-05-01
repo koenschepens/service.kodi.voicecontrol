@@ -54,12 +54,15 @@ if(_context is None):
 
     _context = context.Context(config, folder, includes_dir, config.get("settings", "language"))
 
-    _context.sound_engine = get_engine("sound", _context)(_context, config.getint("sound", "recording_samplerate"))
+    _context.audio_in_engine = get_engine("audio_in", _context)(_context, config.getint("sound", "recording_samplerate"))
+    _context.audio_out_engine = get_engine("audio_out", _context)(_context, 44100)
     _context.tts_engine = get_engine("tts", _context)(_context, config.get("tts", "gender"), _context.language)
-    _context.target_engine = get_engine("target", _context)(_context)
+    _context.media_engine = get_engine("media", _context)(_context)
     _context.input_engine = get_engine("input", _context)(_context)
     _context.personal_assistant = get_engine("personal_assistant", _context)(_context)
     language = config.get("settings", "language")
+
+    _context.log(sys.version)
 
 if(actionString is not None):
     result = _context.Conversation.ask(actionString)

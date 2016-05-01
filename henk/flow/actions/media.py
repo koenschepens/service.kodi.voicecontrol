@@ -11,13 +11,10 @@ class media(StateBase):
         self.context.log("handle media: " + str(result.Parameters))
 
     def video_play(self, result):
-        if("service_name" in result.Parameters):
-            if(result.Parameters["service_name"] == "youtube"):
-                self.context.log("youtube play: " + str(result.Parameters))
-            else:
-                self.context.play_movie(result)
+        if(result.type == COMMAND_TYPE_YOUTUBE):
+            self.context.media_engine.play_youtube_video(result.get_youtube_id())
         else:
-            self.context.play_movie(result)
+            self.context.media_engine.play_movie(result)
 
     def video_search(self, result):
         self.context.log("video_search: " + str(result.Parameters))
@@ -27,7 +24,7 @@ class media(StateBase):
 
     def spotify_play(self, result):
         try:
-            from spotifyState import spotifyState
+            from spotify_action import spotifyState
 
             spot = spotifyState(self.context)
             spot.do_login()

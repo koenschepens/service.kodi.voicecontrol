@@ -2,10 +2,10 @@ __author__ = 'macbook'
 
 import sys
 import os
-import pyaudio
+import py_audio
 
 INITIAL_TAP_THRESHOLD = 0.010
-FORMAT = pyaudio.paInt16
+FORMAT = py_audio.paInt16
 SHORT_NORMALIZE = (1.0/32768.0)
 CHANNELS = 2
 RATE = 48000
@@ -27,7 +27,7 @@ except:
 
 class HoundifyRecognition():
     def __init__(self, context):
-        self.pa = pyaudio.PyAudio()
+        self.pa = py_audio.PyAudio()
         self.Language = context.Language
         self.IncludesDir = context.IncludesDir
         self.context = context

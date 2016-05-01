@@ -1,4 +1,5 @@
 import ConfigParser
+import os
 
 from ..states.statebase import StateBase
 
@@ -11,7 +12,7 @@ class apps(StateBase):
 
     def handle(self, result):
         self.config = ConfigParser.RawConfigParser()
-        configFile = 'actions.config'
+        configFile = os.path.join('..', 'actions.config')
         self.log(configFile)
         self.config.read(configFile)
 

@@ -8,5 +8,5 @@ class GPIO():
         self.pin = context.config.getint("gpio", "hook")
         gpio.setup(self.pin, gpio.IN, pull_up_down = gpio.PUD_DOWN)
 
-    def is_up(self):
+    def is_up(self, initial = False):
         return gpio.input(self.pin) == 0
