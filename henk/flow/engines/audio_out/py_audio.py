@@ -28,6 +28,7 @@ class PyAudio(AudioOutBase):
     supported_formats = []
 
     def __init__(self, context, input_sample_rate):
+        self.pa = pyaudio.PyAudio()
         self.input_sample_rate = input_sample_rate
         self.context = context
         self.threshold = self.context.config.getfloat("sound", "threshold")
@@ -64,8 +65,6 @@ class PyAudio(AudioOutBase):
         return device_index
 
     def open(self, input_index = None, output_index = None):
-        self.pa = pyaudio.PyAudio()
-
         self.input_device_index = self.find_input_device() if input_index is None else input_index
         self.output_device_index = self.find_output_device() if output_index is None else output_index
 
