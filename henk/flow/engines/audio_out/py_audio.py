@@ -25,14 +25,20 @@ OVERSENSITIVE = 15.0/INPUT_BLOCK_TIME
 UNDERSENSITIVE = 120.0/INPUT_BLOCK_TIME
 
 class PyAudio(AudioOutBase):
-    supported_formats = ["mp3","wav","ogg"]
+    supported_formats = []
 
     def __init__(self, context, input_sample_rate):
         self.input_sample_rate = input_sample_rate
         self.context = context
         self.threshold = self.context.config.getfloat("sound", "threshold")
         self.output_stream = None
-        self.input_stream = None
+
+        if(audiotools.MP3Audio.supports_to_pcm()):
+            self.supported_formats.append("mp3")
+        if(audiotools.VorbisAudio.supports_to_pcm()):
+            self.supported_formats.append("ogg")
+        if(audiotools.WaveAudio.supports_to_pcm()):
+            self.supported_formats.append("wav")
 
     def play_dial_tone(self, output):
         self.context.execute_script('aplay -D ' + self.context.config.get('output', output) + ' ' + self.context.includes_dir + '/sounds/beepbeep.wav')
