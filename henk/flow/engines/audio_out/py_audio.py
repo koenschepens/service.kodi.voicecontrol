@@ -139,7 +139,9 @@ class PyAudio(AudioOutBase):
                              frames_per_buffer = INPUT_FRAMES_PER_BLOCK)
 
         # read data (based on the chunk size)
-        data = stream.read(CHUNK)
+        framelist = stream.read(CHUNK)
+
+        data = framelist.to_bytes(False, True)
 
         # play stream (looping from beginning of file to the end)
         while data != '':
