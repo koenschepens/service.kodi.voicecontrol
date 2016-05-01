@@ -19,8 +19,13 @@ except:
     except:
         class xbmc():
             LOGDEBUG = 0
-            LOGWARNING = 1
-            LOGERROR = 2
+            LOGERROR = 4
+            LOGFATAL = 6
+            LOGINFO = 1
+            LOGNONE = 7
+            LOGNOTICE = 2
+            LOGSEVERE = 5
+            LOGWARNING = 3
 
         WINDOW_DIALOG_TEXT_VIEWER = 4
         pass
@@ -30,11 +35,12 @@ class Kodi(MediaBase):
     def __init__(self, context):
         MediaBase.__init__(self, context)
      
-    def log(self, text, logType = "warning"):
+    def log(self, text, logType = "notice"):
         logTypes = { 
             "debug": xbmc.LOGDEBUG,
             "error": xbmc.LOGERROR,
-            "warning": xbmc.LOGWARNING
+            "warning": xbmc.LOGWARNING,
+            "notice": xbmc.LOGNOTICE
         }
 
         xbmc.log(msg= "[state: " + self.context.state.__class__.__name__ + "]: " + text, level=logTypes[logType])
