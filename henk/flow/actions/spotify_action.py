@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import os
 from ..states.statebase import StateBase
 
 import spotify
@@ -13,9 +14,10 @@ class spotifyState(StateBase):
         StateBase.__init__(self, context)
         self.context = context
         if(spotify._session_instance is None):
+            config = spotify.Config()
+            config.load_application_key_file(os.path.join(self.context.root_folder, 'spotify_appkey.key'))
             self.session = spotify.Session()
             self.session.login(context.config.get("spotify", "username"), context.config.get("spotify", "password"))
-            client_secret = context.config.get("spotify", "ClientSecret")
         else:
             self.session = spotify._session_instance
 
