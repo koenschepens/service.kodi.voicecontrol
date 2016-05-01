@@ -32,8 +32,7 @@ class Pyvona_voice(pyvona.Voice):
         self.codec = audio_out_engine.supported_formats[0]
         with tempfile.NamedTemporaryFile(suffix="." + self.codec) as t:
             if(self.codec == "ogg"):
-                with self.use_ogg_codec():
-                    self.fetch_voice_fp(text_to_speak, t)
+                self.fetch_voice_ogg(text_to_speak, t.name)
             else:
                 self.fetch_voice(text_to_speak, t.name)
 
