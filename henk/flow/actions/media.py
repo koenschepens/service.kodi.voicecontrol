@@ -11,7 +11,7 @@ class media(StateBase):
         self.context.log("handle media: " + str(result.Parameters))
 
     def video_play(self, result):
-        if(result.type == COMMAND_TYPE_YOUTUBE):
+        if(result.get_domain() == "youtube"):
             self.context.media_engine.play_youtube_video(result.get_youtube_id())
         else:
             self.context.media_engine.play_movie(result)
