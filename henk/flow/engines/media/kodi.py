@@ -77,9 +77,6 @@ class Kodi(MediaBase):
     def show_notification(self, title, message = ''):
         self.media_engine.show_notification(title, message)
 
-    def user_input_required(self):
-        return self.media_engine.user_input_required()
-
     def play_youtube_video(self, url):
         self.activate_window("videos","plugin://plugin.video.youtube/kodion/search/query/?q={q}")
 
@@ -106,6 +103,7 @@ class Kodi(MediaBase):
         self.activate_window(pluginurl = None, window = "weather")
 
     def user_input_required(self):
+        return False
         self.log("check if user input is required")
         time.sleep(8)
         win = xbmcgui.WindowDialog()
