@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="settings.config" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.config" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.074074">
-              <caret line="65" column="40" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.43141592">
+              <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -41,14 +41,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kodi_list.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="kodi_list.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/henk/ui/kodi_list.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12526096">
+            <state vertical-scroll-proportion="0.0">
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.MD" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.MD">
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.51724136">
+              <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,7 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/henk/flow/engines/sound/py_audio.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/media/media_base.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/audio_in/audio_in_base.py" />
         <option value="$PROJECT_DIR$/henk/flow/assistent_result/assistent.py" />
@@ -171,13 +183,14 @@
         <option value="$PROJECT_DIR$/mac.config" />
         <option value="$PROJECT_DIR$/henk/flow/actions/spotify_action.py" />
         <option value="$PROJECT_DIR$/henk/flow/actions/spotify_helpers/kodi_audio_sink.py" />
-        <option value="$PROJECT_DIR$/settings.config" />
         <option value="$PROJECT_DIR$/henk/flow/actions/actionState.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/audio_out/mpg123.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/audio_out/aplay.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/audio_out/pygame_out.py" />
         <option value="$PROJECT_DIR$/henk/flow/engines/personal_assistant/houndify_engine.py" />
         <option value="$PROJECT_DIR$/henk/ui/kodi_list.py" />
+        <option value="$PROJECT_DIR$/README.MD" />
+        <option value="$PROJECT_DIR$/settings.config" />
       </list>
     </option>
   </component>
@@ -598,13 +611,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -953,14 +959,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.074074">
-          <caret line="65" column="40" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/henk/tmp/settings">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1013,11 +1011,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/henk/ui/kodi_list.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12526096">
+        <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.MD">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.51724136">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43141592">
+          <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
