@@ -12,8 +12,8 @@ class actionState(StateBase):
             immediateActions = self.context.config.options("immediateActions")
 
             if(isinstance(result, basestring)):
-                self.context.State = cs(self.context)
-                self.context.State.handle(result)
+                self.context.state = cs(self.context)
+                self.context.state.handle(result)
                 return
 
             configState = cs(self.context)
@@ -41,22 +41,22 @@ class actionState(StateBase):
 
                 if(actionItems[0] in actionClasses):
                     self.context.log("domain exists: " + actionItems[0])
-                    self.context.State = actionClasses[actionItems[0]](self.context)
+                    self.context.state = actionClasses[actionItems[0]](self.context)
                 else:
                     self.context.log("domain " + actionItems[0] + " does not exist. Using config")
-                    self.context.State = cs(self.context)
+                    self.context.state = cs(self.context)
 
-                if(hasattr(self.context.State, actionItems[1])):
+                if(hasattr(self.context.state, actionItems[1])):
                     self.context.log("actionState action: " + actionItems[1])
-                    action = getattr(self.context.State, actionItems[1])
+                    action = getattr(self.context.state, actionItems[1])
                     action(result)
                 else:
-                    self.context.log("action does not exist: " + actionItems[1] + ". Using " + self.context.State.__class__.__name__ + ".handle()")
-                    self.context.State.handle(result)
+                    self.context.log("action does not exist: " + actionItems[1] + ". Using " + self.context.state.__class__.__name__ + ".handle()")
+                    self.context.state.handle(result)
 
         # Check if user input is required
         if(self.context.user_input_required()):
-            self.context.State = input(self.context)
-            self.context.State.handle(result)
+            self.context.state = input(self.context)
+            self.context.state.handle(result)
 
 

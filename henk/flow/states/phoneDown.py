@@ -11,5 +11,5 @@ class PhoneDown(statebase.StateBase):
         while (not self.context.is_up(False)):
             time.sleep(0.25)
 
-        self.context.State = phoneUp.PhoneUp(self.context)
-        self.context.State.go()
+        self.context.state = phoneUp.PhoneUp(self.context)
+        self.context.state.go()

@@ -37,7 +37,7 @@ class Kodi(MediaBase):
             "warning": xbmc.LOGWARNING
         }
 
-        xbmc.log(msg= "[state: " + self.context.State.__class__.__name__ + "]: " + text, level=logTypes[logType])
+        xbmc.log(msg= "[state: " + self.context.state.__class__.__name__ + "]: " + text, level=logTypes[logType])
 
     def show_notification(self, title, message = ''):
         dialog = xbmcgui.Dialog()
